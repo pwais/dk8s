@@ -16,7 +16,8 @@ To use, run `$ ./dk8s.py --build --up`.
 
     ```$ ./dk8s.py --up```
 
-It may take a minute or two for k8s to build inside the container.  Use `$ docker logs local_k8s_test` to follow along.  Wait until you see a message like:
+It may take a minute or two for k8s to build inside the container.  Use `$ docker logs dk8s` to follow along.
+Wait until you see a message like:
   
   ```
   To start using your cluster, open up another terminal/tab and run:
