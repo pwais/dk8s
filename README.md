@@ -9,11 +9,12 @@ to the k8s minion machines.
 
 To use, run `$ ./dk8s.py --build --up`.
 
-# Testing the Container
+
+## Testing the Container
 
 1. Start a test container:
 
-    ```$ ./setup.py --up```
+    ```$ ./dk8s.py --up```
 
 It may take a minute or two for k8s to build inside the container.  Use `$ docker logs local_k8s_test` to follow along.  Wait until you see a message like:
   
@@ -37,7 +38,7 @@ in the logs, then use `$ docker ps -a` to find and delete any containers using t
 
 2. Start a shell inside the container: 
 
-    ```$ ./setup.py --shell```
+    ```$ ./dk8s.py --shell```
 
 3. Try running nginx.  First start nginx through k8s:
 
@@ -52,13 +53,15 @@ Now see if you can see the nginx welcome page: `% curl http://10.0.0.2:80`
 
 4. To remove the test cluster, use `$ ./dk8s.py --rm`
 
-# Troubleshooting
+
+## Troubleshooting
 
 In this local setup, Kubernetes and Docker may try to claim IP addresses in the
 same range.  You may need to change `hack/local-up-cluster.sh` to use `--portal_net="10.100.0.0/16"` as noted
 in [the k8s docs](https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/getting-started-guides/locally.md#i-cant-reach-service-ips-on-the-network).
 
-# References
+
+## References
 * https://github.com/ghodss/kubernetes-macosx-development
 * https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/getting-started-guides/locally.md
 * https://github.com/GoogleCloudPlatform/golang-docker/blob/master/base/Dockerfile
