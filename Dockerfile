@@ -16,13 +16,17 @@
 # Use golang as a base image because go is currently tricky to install
 FROM golang:1.4
 
+# Necessities
 RUN apt-get update
-RUN apt-get install -y curl wget rsync less sudo vim 
+RUN apt-get install -y curl wget rsync sudo 
+
+# Debugging utils
+RUN apt-get install -y less vim links man telnet netcat dnsutils iftop lynx
 
 # Get etcd.
-RUN wget https://github.com/coreos/etcd/releases/download/v2.0.5/etcd-v2.0.5-linux-amd64.tar.gz -O etcd-linux-amd64.tar.gz && \
+RUN wget https://github.com/coreos/etcd/releases/download/v2.0.9/etcd-v2.0.9-linux-amd64.tar.gz -O etcd-linux-amd64.tar.gz && \
   tar -C /usr/local/ -xzf etcd-linux-amd64.tar.gz && \
-  mv /usr/local/etcd-v2.0.5-linux-amd64 /usr/local/etcd && \
+  mv /usr/local/etcd-v2.0.9-linux-amd64 /usr/local/etcd && \
   ln -s /usr/local/etcd/etcd /usr/bin/etcd && \
   ln -s /usr/local/etcd/etcd-migrate /usr/bin/etcd-migrate && \
   ln -s /usr/local/etcd/etcdctl /usr/bin/etcdctl && \
@@ -32,6 +36,12 @@ RUN wget https://github.com/coreos/etcd/releases/download/v2.0.5/etcd-v2.0.5-lin
 RUN wget -qO- https://get.docker.com/ | sh
 
 ADD .kubernetes /opt/kubernetes
+RUN /opt/kubernetes/hack/build-go.sh
+
+WORKDIR /opt/kubernetes/
+
+# Give docker more loopback devices to work with
+#RUN echo "options loop max_loop=256" >> /etc/modprobe.d/loop.conf
 
 ADD startup.sh /
 CMD /startup.sh 
