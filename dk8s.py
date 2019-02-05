@@ -123,7 +123,7 @@ if __name__ == "__main__":
         """
         
         run_in_shell(
-          "git clone https://github.com/GoogleCloudPlatform/kubernetes.git .kubernetes")
+          "git clone --depth=1 https://github.com/GoogleCloudPlatform/kubernetes.git .kubernetes")
         
         log.info("... done fetching k8s.")
     

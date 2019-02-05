@@ -1,4 +1,4 @@
-# Copyright 2015 Maintainers of GridPG
+# Copyright 2015 Maintainers of dk8s 
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,16 +32,12 @@ RUN wget https://github.com/coreos/etcd/releases/download/v2.0.9/etcd-v2.0.9-lin
   ln -s /usr/local/etcd/etcdctl /usr/bin/etcdctl && \
   rm etcd-linux-amd64.tar.gz
 
-# Get docker and test
+# Get docker
 RUN wget -qO- https://get.docker.com/ | sh
 
 ADD .kubernetes /opt/kubernetes
-RUN /opt/kubernetes/hack/build-go.sh
-
 WORKDIR /opt/kubernetes/
-
-# Give docker more loopback devices to work with
-#RUN echo "options loop max_loop=256" >> /etc/modprobe.d/loop.conf
+RUN /opt/kubernetes/hack/build-go.sh
 
 ADD startup.sh /
 CMD /startup.sh 
